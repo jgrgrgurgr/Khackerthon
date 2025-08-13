@@ -2,41 +2,41 @@ from sqlalchemy import Column, Integer, String, DECIMAL, Text, ForeignKey
 from sqlalchemy.orm import relationship
 from config.database import Base
 
-class User(Base):
-    __tablename__ = "user"
+class Usr(Base):
+    __tablename__ = "usr"
     
-    user_id = Column(Integer, primary_key=True, autoincrement=True)
+    uid = Column(Integer, primary_key=True, autoincrement=True)
     id = Column(String(50), unique=True, nullable=False)
-    password = Column(String(255), nullable=False)
+    pwd = Column(String(255), nullable=False)
     
-    wallet = relationship("U_Wallet", back_populates="user", uselist=False)
-    stock_ownerships = relationship("S_Ownership", back_populates="user")
+    wallet = relationship("UsrWallet", back_populates="usr", uselist=False)
+    stk_owns = relationship("StkOwn", back_populates="usr")
 
-class UserWallet(Base):
-    __tablename__ = "u_wallet"
+class UsrWallet(Base):
+    __tablename__ = "usr_wallet"
     
-    user_id = Column(Integer, ForeignKey("user.user_id"), primary_key=True)
+    uid = Column(Integer, ForeignKey("usr.uid"), primary_key=True)
     money = Column(DECIMAL(15, 2), default=0)
     
-    user = relationship("User", back_populates="wallet")
+    usr = relationship("Usr", back_populates="wallet")
 
-class Stock(Base):
-    __tablename__ = "stock"
+class Stk(Base):
+    __tablename__ = "stk"
     
-    j_id = Column(Integer, primary_key=True, autoincrement=True)
+    jid = Column(Integer, primary_key=True, autoincrement=True)
     name = Column(String(100), nullable=False)
-    explanation = Column(Text)
+    exp = Column(Text)
     price = Column(DECIMAL(15, 2), nullable=False)
     
-    ownerships = relationship("S_Ownership", back_populates="stock")
+    owns = relationship("StkOwn", back_populates="stk")
 
-class StockOwnership(Base):
-    __tablename__ = "s_ownership"
+class StkOwn(Base):
+    __tablename__ = "stk_own"
     
-    user_id = Column(Integer, ForeignKey("user.user_id"), primary_key=True)
-    j_id = Column(Integer, ForeignKey("stock.j_id"), primary_key=True)
-    price_at_time = Column(DECIMAL(15, 2), nullable=False)
-    quantity = Column(Integer, default=0)
+    uid = Column(Integer, ForeignKey("usr.uid"), primary_key=True)
+    jid = Column(Integer, ForeignKey("stk.jid"), primary_key=True)
+    price_at = Column(DECIMAL(15, 2), nullable=False)
+    qty = Column(Integer, default=0)
     
-    user = relationship("User", back_populates="s_ownerships")
-    stock = relationship("Stock", back_populates="ownerships")
+    usr = relationship("Usr", back_populates="stk_owns")
+    stk = relationship("Stk", back_populates="owns")

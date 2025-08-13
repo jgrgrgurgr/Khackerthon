@@ -1,48 +1,48 @@
 from pydantic import BaseModel
 from typing import List, Optional
 
-class U_Create(BaseModel):
+class UsrCrt(BaseModel):
     id: str
-    password: str
-    initial_money: Optional[float] = 10000.0
+    pwd: str
+    init_money: Optional[float] = 10000.0
 
-class U_Response(BaseModel):
-    user_id: int
+class UsrResp(BaseModel):
+    uid: int
     id: str
     
     class Config:
         from_attributes = True
 
-class S_Create(BaseModel):
+class StkCrt(BaseModel):
     name: str
-    explanation: Optional[str] = None
+    exp: Optional[str] = None
     price: float
 
-class S_Response(BaseModel):
-    j_id: int
+class StkResp(BaseModel):
+    jid: int
     name: str
-    explanation: Optional[str]
+    exp: Optional[str]
     price: float
     
     class Config:
         from_attributes = True
 
-class S_Info(BaseModel):
+class StkInfo(BaseModel):
     name: str
-    quantity: int
-    bought_price: float
-    current_price: float
-    profit_loss: float
+    qty: int
+    buy_price: float
+    cur_price: float
+    pl: float
 
-class U_ProfInfo(BaseModel):
-    user_id: int
-    username: str
-    profit_if_sold: float
+class UsrProfitInfo(BaseModel):
+    uid: int
+    uname: str
+    profit_sold: float
 
-class Top_S_Info(BaseModel):
+class TopStkInfo(BaseModel):
     name: str
-    total_quantity: int
+    tot_qty: int
 
-class Buy_S_Request(BaseModel):
-    j_id: int
-    quantity: int
+class BuyReq(BaseModel):
+    jid: int
+    qty: int
