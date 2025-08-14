@@ -123,6 +123,15 @@ config.ini
 .env.production
 secrets.json
 
+*.key
+*.pem
+*.crt
+*.p12
+api_keys.txt
+kiwoom_config.ini
+kis_tokens.json
+access_tokens/
+
 logs/
 *.log
 
